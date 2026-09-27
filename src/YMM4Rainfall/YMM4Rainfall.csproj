@@ -1,0 +1,29 @@
+<!-- SPDX-License-Identifier: MPL-2.0 -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>YMM4Rainfall</AssemblyName>
+    <RootNamespace>YMM4Rainfall</RootNamespace>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Description>雨雪と浮上。雨と雪、風や渦、水泡やPNG画像の移動を調整できる映像エフェクト。</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="../../samples/pig-side-256.png" LogicalName="YMM4Rainfall.BuiltIn.Pig.png" />
+    <YMM4Reference Include="YukkuriMovieMaker.Plugin;YukkuriMovieMaker.Controls;Vortice.Direct2D1;Vortice.DirectX;Vortice.DXGI;Vortice.Mathematics;SharpGen.Runtime;SharpGen.Runtime.COM">
+      <HintPath>$(YMM4ReferenceDirectory)%(Identity).dll</HintPath>
+      <Private>false</Private>
+    </YMM4Reference>
+    <Reference Include="@(YMM4Reference)" />
+  </ItemGroup>
+
+  <Target Name="ValidateYMM4References" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="'$(YMM4DirPath)' == ''"
+           Text="Directory.Build.local.props に開発用YMM4の YMM4DirPath を設定してください。" />
+    <Error Condition="'$(YMM4DirPath)' != '' and !Exists('%(YMM4Reference.HintPath)')"
+           Text="YMM4の参照DLLが見つかりません: %(YMM4Reference.HintPath)" />
+  </Target>
+</Project>

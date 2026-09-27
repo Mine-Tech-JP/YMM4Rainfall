@@ -1,0 +1,9 @@
+.vs/
+**/bin/
+**/obj/
+*.suo
+*.user
+Directory.Build.local.props
+tmp/*
+.env
+.env.*

@@ -1,0 +1,10 @@
+<Project>
+  <Import Project="Directory.Build.local.props" Condition="Exists('Directory.Build.local.props')" />
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+    <YMM4ReferenceDirectory Condition="'$(YMM4DirPath)' != ''">$([MSBuild]::EnsureTrailingSlash('$(YMM4DirPath)'))</YMM4ReferenceDirectory>
+  </PropertyGroup>
+</Project>

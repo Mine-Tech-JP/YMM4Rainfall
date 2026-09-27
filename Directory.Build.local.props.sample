@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <!-- YukkuriMovieMaker.exe のあるフォルダーを指定します。 -->
+    <YMM4DirPath>C:\Path\To\YukkuriMovieMaker4\</YMM4DirPath>
+    <!-- 既存の Windows SDK 参照パッケージを含む NuGet キャッシュです。 -->
+    <RestoreFallbackFolders>$(USERPROFILE)\.nuget\packages</RestoreFallbackFolders>
+  </PropertyGroup>
+</Project>

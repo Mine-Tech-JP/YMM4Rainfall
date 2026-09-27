@@ -1,0 +1,1258 @@
+<!DOCTYPE html><html lang="ja" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="雨雪と浮上の導入、雨と雪、風と渦、泡、PNG画像の登録と設定を説明します。"><title>雨雪と浮上 ユーザーズマニュアル</title><style>
+    :root {
+      --bg: #f3fbff;
+      --surface: rgba(255, 255, 255, 0.86);
+      --surface-solid: #ffffff;
+      --surface-muted: #edf8fe;
+      --text: #153b52;
+      --muted: #3c6176;
+      --line: rgba(51, 132, 175, 0.18);
+      --brand: #137da4;
+      --brand-strong: #0b5d82;
+      --brand-soft: #e1f6ff;
+      --accent: #086d9c;
+      --accent-soft: #e7f5ff;
+      --success: #2f805e;
+      --success-soft: #e0f3e9;
+      --warning: #9a641d;
+      --warning-soft: #fff3d7;
+      --shadow: 0 18px 50px rgba(55, 135, 180, 0.12);
+      --radius-lg: 26px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --hero-start: #fbfeff;
+      --hero-mid: #e1f7ff;
+      --hero-end: #bdeafb;
+      --hero-glow: rgba(255, 255, 255, 0.7);
+      --hero-glass-edge: rgba(255, 255, 255, 0.82);
+      --on-brand: #ffffff;
+      --content: 1180px;
+      font-family: "Yu Gothic UI", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+    }
+
+    html[data-theme="dark"] {
+      --bg: #081b2a;
+      --surface: rgba(14, 37, 54, 0.92);
+      --surface-solid: #0e2536;
+      --surface-muted: #132f43;
+      --text: #eaf7ff;
+      --muted: #aac8dc;
+      --line: rgba(165, 224, 255, 0.18);
+      --brand: #78d2f4;
+      --brand-strong: #b0e8ff;
+      --brand-soft: #123e55;
+      --accent: #9edfff;
+      --accent-soft: #153c56;
+      --success: #79d3a8;
+      --success-soft: #19382c;
+      --warning: #f3c16f;
+      --warning-soft: #3a3020;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+      --hero-start: #0d2439;
+      --hero-mid: #10364c;
+      --hero-end: #15516a;
+      --hero-glow: rgba(125, 213, 255, 0.13);
+      --hero-glass-edge: rgba(174, 227, 255, 0.2);
+      --on-brand: #08293d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 24px;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% -10%, rgba(129, 222, 251, 0.24), transparent 34rem),
+        radial-gradient(circle at 95% 12%, rgba(174, 213, 255, 0.18), transparent 28rem),
+        var(--bg);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    a {
+      color: var(--brand-strong);
+      text-decoration-thickness: 0.08em;
+      text-underline-offset: 0.2em;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 100;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: var(--on-brand);
+      background: var(--brand-strong);
+      transform: translateY(-180%);
+      transition: transform 0.2s ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      width: min(calc(100% - 32px), var(--content));
+      margin: 16px auto 0;
+    }
+
+    .tool-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--text);
+      background: var(--surface);
+      box-shadow: 0 6px 18px rgba(55, 135, 180, 0.08);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      backdrop-filter: blur(12px);
+    }
+
+    .tool-button:hover {
+      border-color: var(--brand);
+      color: var(--brand-strong);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      width: min(calc(100% - 32px), var(--content));
+      margin: 14px auto 28px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background:
+        linear-gradient(118deg, var(--hero-start), var(--hero-mid) 58%, var(--hero-end)),
+        var(--brand-soft);
+      box-shadow: var(--shadow);
+      color: var(--text);
+    }
+
+    .hero::before,
+    .hero::after {
+      position: absolute;
+      border: 1px solid var(--hero-glass-edge);
+      border-radius: 999px;
+      content: "";
+      pointer-events: none;
+    }
+
+    .hero::before {
+      top: -190px;
+      right: -80px;
+      width: 430px;
+      height: 430px;
+      background: radial-gradient(circle, var(--hero-glow), transparent 68%);
+    }
+
+    .hero::after {
+      right: 190px;
+      bottom: -235px;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, var(--hero-glow), transparent 68%);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.6fr);
+      gap: 34px;
+      align-items: center;
+      padding: clamp(30px, 6vw, 68px);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--brand-strong);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin-top: 0;
+      line-height: 1.35;
+    }
+
+    h1 {
+      max-width: 16em;
+      margin-bottom: 18px;
+      font-size: clamp(2rem, 5vw, 4.35rem);
+      letter-spacing: -0.035em;
+    }
+
+    .hero-copy {
+      max-width: 44em;
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.8vw, 1.18rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .button-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 9px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--brand-strong);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .button-link.primary {
+      border-color: var(--brand-strong);
+      color: var(--on-brand);
+      background: var(--brand-strong);
+    }
+
+    .button-link:hover {
+      color: var(--brand-strong);
+      border-color: var(--brand);
+      background: var(--surface-solid);
+    }
+
+    .button-link.primary:hover {
+      color: var(--on-brand);
+      border-color: var(--brand);
+      background: var(--brand);
+    }
+
+    .hero-summary {
+      display: grid;
+      gap: 12px;
+      padding: 20px;
+      border: 1px solid var(--hero-glass-edge);
+      border-radius: 22px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+    }
+
+    .summary-item {
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .summary-number {
+      display: grid;
+      place-items: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+      background: var(--brand-soft);
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+
+    .summary-item strong,
+    .summary-item span {
+      display: block;
+    }
+
+    .summary-item span {
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 28px;
+      width: min(calc(100% - 32px), var(--content));
+      margin: 0 auto 56px;
+    }
+
+    .toc {
+      position: sticky;
+      top: 18px;
+      align-self: start;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      box-shadow: 0 12px 35px rgba(55, 135, 180, 0.08);
+      backdrop-filter: blur(14px);
+    }
+
+    .toc-title {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+
+    .toc-list {
+      display: grid;
+      gap: 3px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .toc a {
+      display: block;
+      padding: 7px 10px;
+      border-radius: 9px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .toc a:hover,
+    .toc a[aria-current="true"] {
+      color: var(--brand-strong);
+      background: var(--brand-soft);
+    }
+
+    .toc-meta {
+      margin: 14px 0 0;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.6;
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    .section {
+      margin-bottom: 26px;
+      padding: clamp(24px, 4vw, 42px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      box-shadow: 0 14px 38px rgba(55, 135, 180, 0.075);
+      backdrop-filter: blur(12px);
+    }
+
+    .section-kicker {
+      margin: 0 0 5px;
+      color: var(--brand);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      font-size: clamp(1.55rem, 3vw, 2.25rem);
+      letter-spacing: -0.025em;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1.08rem;
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+    .lead {
+      max-width: 48em;
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 1.03rem;
+    }
+
+    .callout {
+      margin: 22px 0;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--brand);
+      border-radius: var(--radius-sm);
+      background: var(--brand-soft);
+    }
+
+    .callout.warning {
+      border-left-color: var(--warning);
+      background: var(--warning-soft);
+    }
+
+    .callout.success {
+      border-left-color: var(--success);
+      background: var(--success-soft);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .callout p:last-child {
+      margin-bottom: 0;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      counter-reset: step;
+      list-style: none;
+    }
+
+    .steps li {
+      position: relative;
+      min-height: 62px;
+      padding: 15px 18px 15px 70px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--surface-solid);
+      counter-increment: step;
+    }
+
+    .steps li::before {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      color: var(--on-brand);
+      background: var(--brand);
+      content: counter(step);
+      font-weight: 900;
+    }
+
+    .steps strong {
+      display: block;
+      line-height: 1.5;
+    }
+
+    .steps span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .grid-2,
+    .grid-3,
+    .preset-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .preset-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface-solid);
+    }
+
+    .card p:last-child,
+    .card ul:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-number {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      color: var(--brand-strong);
+      background: var(--brand-soft);
+      font-size: 0.85rem;
+      font-weight: 900;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: var(--surface-muted);
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .tag.featured {
+      color: var(--brand-strong);
+      border-color: transparent;
+      background: var(--brand-soft);
+    }
+
+    .path-card {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .path-visual {
+      display: grid;
+      place-items: center;
+      min-height: 142px;
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px),
+        var(--surface-muted);
+      background-size: 22px 22px;
+    }
+
+    .path-visual svg {
+      width: 100%;
+      max-width: 240px;
+      height: 110px;
+      overflow: visible;
+    }
+
+    .path-line {
+      fill: none;
+      stroke: var(--brand);
+      stroke-width: 7;
+      stroke-linecap: round;
+    }
+
+    .path-guide {
+      fill: none;
+      stroke: var(--muted);
+      stroke-width: 2;
+      stroke-dasharray: 5 6;
+      opacity: 0.55;
+    }
+
+    .path-point {
+      fill: var(--surface-solid);
+      stroke: var(--brand-strong);
+      stroke-width: 4;
+    }
+
+    .path-point.control {
+      stroke: var(--accent);
+    }
+
+    .path-content {
+      padding: 19px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 18px 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface-solid);
+    }
+
+    th,
+    td {
+      padding: 13px 15px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--brand-strong);
+      background: var(--brand-soft);
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .meter-list {
+      display: grid;
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .meter-row {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) 68px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .meter-label,
+    .meter-value {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .meter-value {
+      text-align: right;
+    }
+
+    .meter {
+      overflow: hidden;
+      height: 13px;
+      border-radius: 999px;
+      background: var(--surface-muted);
+      box-shadow: inset 0 0 0 1px var(--line);
+    }
+
+    .meter span {
+      display: block;
+      width: var(--value);
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--brand), #a6e7ff);
+    }
+
+    .setting-list {
+      display: grid;
+      grid-template-columns: minmax(145px, 0.3fr) minmax(0, 0.7fr);
+      margin: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .setting-list dt,
+    .setting-list dd {
+      margin: 0;
+      padding: 13px 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .setting-list dt {
+      color: var(--brand-strong);
+      font-weight: 900;
+    }
+
+    .setting-list dd {
+      color: var(--muted);
+    }
+
+    details {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--surface-solid);
+    }
+
+    summary {
+      padding: 14px 18px;
+      cursor: pointer;
+      color: var(--brand-strong);
+      font-weight: 900;
+    }
+
+    details > div {
+      padding: 0 18px 16px;
+    }
+
+    .trouble-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .trouble-item {
+      display: grid;
+      grid-template-columns: minmax(150px, 0.34fr) minmax(0, 0.66fr);
+      gap: 18px;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      background: var(--surface-solid);
+    }
+
+    .trouble-item strong {
+      color: var(--brand-strong);
+    }
+
+    .trouble-item p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    code {
+      padding: 0.12em 0.38em;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--brand-strong);
+      background: var(--surface-muted);
+      font-family: "Cascadia Mono", "Consolas", monospace;
+      font-size: 0.92em;
+    }
+
+    footer {
+      width: min(calc(100% - 32px), var(--content));
+      margin: 0 auto 36px;
+      padding: 22px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.86rem;
+    }
+
+    .mobile-toc-button {
+      display: none;
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 11px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      background: var(--surface);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-summary {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .summary-item {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .summary-number {
+        margin: auto;
+      }
+
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .toc {
+        position: static;
+        display: none;
+      }
+
+      .toc.is-open {
+        display: block;
+      }
+
+      .mobile-toc-button {
+        display: block;
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        font-size: 15px;
+      }
+
+      .topbar,
+      .hero,
+      .shell,
+      footer {
+        width: min(calc(100% - 20px), var(--content));
+      }
+
+      .topbar {
+        justify-content: stretch;
+      }
+
+      .tool-button {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .hero {
+        border-radius: 24px;
+      }
+
+      .hero-inner {
+        padding: 28px 22px;
+      }
+
+      .hero-summary,
+      .grid-2,
+      .grid-3,
+      .preset-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 24px 19px;
+        border-radius: 20px;
+      }
+
+      .setting-list,
+      .trouble-item {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+
+      .setting-list dd {
+        padding-top: 0;
+      }
+
+      .meter-row {
+        grid-template-columns: 58px minmax(0, 1fr) 56px;
+        gap: 8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media print {
+      :root,
+      html[data-theme="dark"] {
+        --bg: #ffffff;
+        --surface: #ffffff;
+        --surface-solid: #ffffff;
+        --surface-muted: #f5f5f5;
+        --text: #173b50;
+        --muted: #456476;
+        --line: #d7e8f1;
+        --brand: #116d96;
+        --brand-strong: #0b587d;
+        --brand-soft: #e8f7ff;
+      }
+
+      body {
+        background: #ffffff;
+        font-size: 11pt;
+      }
+
+      .topbar,
+      .toc,
+      .mobile-toc-button,
+      .hero-actions {
+        display: none !important;
+      }
+
+      .hero,
+      .shell,
+      footer {
+        width: 100%;
+      }
+
+      .hero {
+        color: var(--text);
+        background: #ffffff;
+        box-shadow: none;
+      }
+
+      .shell {
+        display: block;
+      }
+
+      .section {
+        break-inside: avoid;
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+
+      a {
+        color: inherit;
+      }
+    }
+
+    .section :is(a, code) { overflow-wrap: anywhere; }
+    .section > :is(ul, ol) { padding-left: 1.6rem; }
+    .section li { margin-block: 0.45rem; }
+    .section a[id] { display: block; scroll-margin-top: 1.5rem; }
+    .section .table-wrap table { min-width: 560px; }
+    .section td:first-child { min-width: 8em; }
+    .table-hint { display: none; }
+    @media (max-width: 680px) {
+      .table-hint { display: block; margin-bottom: -8px; color: var(--muted); font-size: 0.85rem; }
+    }
+    .toc { max-height: calc(100vh - 48px); overflow-y: auto; }
+    @media (max-width: 900px) { .toc { max-height: none; } }
+    @media print {
+      .section .table-wrap { overflow: visible; }
+      .section .table-wrap table { min-width: 0; font-size: 9pt; }
+      .section .table-wrap th { white-space: normal; }
+      .section { break-inside: auto; }
+      tr { break-inside: avoid; }
+      thead { display: table-header-group; }
+    }
+
+html { color-scheme: light; } html[data-theme="dark"] { color-scheme: dark; }
+@media print { html, html[data-theme="dark"] { color-scheme: light; } }
+</style></head><body>
+<a class="skip-link" href="#main">本文へ移動</a><div class="topbar" aria-label="表示設定"><button class="tool-button" id="themeButton" type="button" aria-pressed="false"><span aria-hidden="true">◐</span> 配色を切り替える</button><button class="tool-button" id="printButton" type="button"><span aria-hidden="true">▤</span> 印刷する</button></div>
+<header class="hero"><div class="hero-inner"><div><p class="eyebrow">雨雪と浮上 / YMM4Rainfall</p><h1>雨雪と浮上<br>ユーザーズマニュアル</h1><p class="hero-copy">映像に雨や雪を降らせる。泡を浮かべる。好きなPNG画像を動かす。種類を選び、量と動きから調整を始めましょう。</p><p>対象バージョン 1.0.0</p><div class="hero-actions"><a class="button-link primary" href="#install">導入から始める</a><a class="button-link" href="#snow">雪を降らせる</a><a class="button-link" href="#trouble">困ったとき</a></div></div><div class="hero-summary" aria-label="主な使い方"><div class="summary-item"><span class="summary-number">01</span><div><strong>雨と雪</strong><span>静かな天候から風・渦まで</span></div></div><div class="summary-item"><span class="summary-number">02</span><div><strong>泡</strong><span>輪郭と映り込みを調整</span></div></div><div class="summary-item"><span class="summary-number">03</span><div><strong>カスタムPNG</strong><span>好きな絵を登録して動かす</span></div></div></div></div></header>
+<div class="shell"><div><button class="mobile-toc-button" id="tocButton" type="button" aria-expanded="false" aria-controls="toc">目次を表示</button><nav class="toc" id="toc" aria-label="ページ内目次"><p class="toc-title">CONTENTS</p><ol class="toc-list"><li><strong>はじめに</strong><ul><li><a href="#overview">できること</a></li><li><a href="#install">導入とエフェクトの追加</a></li><li><a href="#try-defaults">まず雨を降らせる</a></li><li><a href="#examples">目的別の設定例</a></li></ul></li><li><strong>種類ごとの調整</strong><ul><li><a href="#rain">雨の量と見た目</a></li><li><a href="#snow">雪を降らせる</a></li><li><a href="#wind">風・漂い・局所的な動き</a></li><li><a href="#bubbles">泡を浮かべる</a></li><li><a href="#png">PNG画像を登録して動かす</a></li></ul></li><li><strong>詳しい調整と保存</strong><ul><li><a href="#motion">移動方向と速度</a></li><li><a href="#rotation">揺らめきと回転</a></li><li><a href="#onset">出現開始</a></li><li><a href="#animation">Animationと色</a></li><li><a href="#save">保存とバックアップ</a></li></ul></li><li><strong>困ったときと資料</strong><ul><li><a href="#trouble">困ったとき</a></li><li><a href="#quality">動作確認範囲と制限</a></li><li><a href="#defaults">設定範囲と初期値</a></li><li><a href="#license">ライセンスとソースコード</a></li></ul></li></ol><p class="toc-meta">単体で閲覧できます。外部フォントやスクリプトは読み込みません。</p></nav></div><main id="main">
+<section class="section" id="overview"><p class="section-kicker">01 / はじめに</p><h2>できること</h2>
+<p>「雨雪と浮上」は、映像へ雨や雪を降らせたり、泡や好きなPNG画像を動かしたりする映像エフェクトです。最上段の「種類」から、使いたい表現を選びます。</p>
+<div class="grid-3"><div class="card"><h3>雨と雪を降らせる</h3><p>線や雪の結晶などの見た目を選び、量、速さ、風を調整します。雪は漂い、渦、巻き上がりも使えます。</p></div><div class="card"><h3>泡を浮かべる</h3><p>透明な泡を上へ流し、揺らめきを加えます。輪郭と映り込みの濃さは別々に調整できます。</p></div><div class="card"><h3>PNG画像を動かす</h3><p>画像を登録し、方向、大きさ、回転を調整します。雪の見た目にもPNGを使えます。</p></div></div>
+<p>種類と見た目ごとに個別の設定があります。丸から水滴へ切り替えて戻ると、大きさ・量・動き・色・Animationなども戻ります。初めて選ぶ見た目には専用の初期値を使います。雪用PNGとカスタムPNGの選択も別々に保持します。</p>
+<div class="callout"><p>動作を確認した環境と、利用上の制限は<a href="#quality">動作確認範囲と制限</a>を参照してください。</p></div>
+</section>
+<section class="section" id="install"><p class="section-kicker">02 / はじめに</p><h2>導入とエフェクトの追加</h2>
+<h3>ライセンス</h3><p>本プラグインはMozilla Public License 2.0（MPL-2.0）で提供します。同梱のLICENSE.txtを参照してください。対応ソースの入手先は、同梱のSOURCE_CODE.txtを参照してください。登録するPNGには、それぞれの権利者の条件が適用されます。</p><h3>動作環境</h3><p>動作確認済みの環境はYMM4 Lite 4.56.1.0です。他の版は未確認です。ビルド対象は.NET 10、Windowsビルド19041以降であり、すべての対象環境での実機確認を意味しません。</p>
+<h3>.ymmeから導入する</h3><ol><li>配布された <code>YMM4Rainfall.ymme</code> を保存します。</li><li>ファイルをダブルクリックし、起動したインストーラーの案内に従います。</li><li>YMM4を起動します。</li></ol>
+<p>インストーラーが起動しない場合は、YMM4の「ヘルプ」→「YMM4用拡張子の関連付け」→「登録する」を実行してから、もう一度 <code>.ymme</code> ファイルを開いてください。</p>
+<h3>DLLを手動で配置する</h3><ol><li>YMM4を終了します。</li><li>YMM4のフォルダー内に <code>user\plugin\YMM4Rainfall</code> を作ります。</li><li><code>YMM4Rainfall.dll</code> を入れます。</li><li>YMM4を起動します。</li></ol>
+<p>同じDLLを複数のプラグインフォルダーへ配置しないでください。カスタムPNGの標準ブタは登録せずに使えます。ご自身のPNG素材を使う場合は、別途ライブラリへ登録します。</p>
+<h3>エフェクトを追加する</h3><ol><li>映像または画像のアイテムをタイムラインへ置き、選択します。</li><li>「映像エフェクト」の追加から、カテゴリ「描画」の「雨雪と浮上」を選びます。</li><li>「種類」を選び、プレビューを再生します。</li></ol>
+</section>
+<section class="section" id="try-defaults"><p class="section-kicker">03 / はじめに</p><h2>まず雨を降らせる</h2>
+<p>YMM4側でこのエフェクトのデフォルトを変更していない場合、新しく追加すると「雨」の「線」が選ばれます。出現開始と20秒の立ち上がりが有効なので、追加直後は雨が少なく見えます。</p>
+<ol><li>雨を見分けやすい暗めの映像または画像を、25秒程度の長さで用意します。</li><li>「雨雪と浮上」を追加し、「種類」が「雨」、「見た目」が「線」であることを確認します。</li><li>設定を変えずに先頭から20秒程度プレビューし、雨の量が徐々に増える様子を確認します。</li><li>好みに合わせて「量」「移動速度」「不透明度」を調整します。</li></ol>
+<p class="table-hint">表は横へスクロールできます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="雨の線の主な初期値"><table><thead><tr><th scope="col">項目</th><th scope="col">初期値</th><th scope="col">調整の目安</th></tr></thead><tbody><tr><td>量</td><td>30%</td><td>小さくすると少なく、大きくすると多くなります。</td></tr>
+<tr><td>移動速度</td><td>4000 px/秒</td><td>小さくするとゆっくり移動します。</td></tr>
+<tr><td>不透明度</td><td>50%</td><td>大きくすると雨を濃く描きます。</td></tr></tbody></table></div>
+<p>線が下方向へ少し傾いて流れます。細さは「太さ」、筋の長さは「長さ」で調整します。ばらつきや色は、それぞれのグループで調整します。使わないグループは見出し左の矢印で折りたためます。</p>
+</section>
+<section class="section" id="examples"><p class="section-kicker">04 / はじめに</p><h2>目的別の設定例</h2>
+<p>「設定例（プリセット）」は、静かな細雪、ぼたん雪、吹雪、渦などの調整値をまとめて適用する機能です。候補は選択中の種類に合わせて表示されます。選択は内容の確認で、「適用」を押すと現在の設定へ反映します。</p>
+<ol><li>アイテムを1つ選び、使う種類を選びます。</li><li>設定例を選び、適用対象と数値を確認します。選ぶだけでは現在の設定は変わりません。</li><li>「適用」で反映します。反映後は通常の設定として自由に調整できます。</li></ol>
+<p>適用する数値項目は、時間とともに値が変わる設定（Animation）を解除し、一覧の値に固定します。粒は適用後の速度や回転の設定に従って動きます。適用前の一覧で対象を確認してください。色、乱数シード、出現開始、PNG参照、他種類の設定は変更しません。雪のPNGを選択している場合は、その画像の見た目を保持して動きを適用します。</p>
+<p class="table-hint">表は横へスクロールできます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="種類ごとの設定例"><table><thead><tr><th scope="col">種類</th><th scope="col">設定例</th></tr></thead><tbody><tr><td>雨</td><td>風に流れる雨</td></tr>
+<tr><td>雪</td><td>静かな細雪／ひらひらしたぼたん雪／風に流れる雪／吹雪／結晶が舞う雪／渦を巻く雪／下から吹き上がる雪</td></tr>
+<tr><td>泡</td><td>輪郭の薄い水泡／背景を映す水泡</td></tr></tbody></table></div>
+<p>「背景を映す水泡」は水泡Bの設定例です。実際に参照できる映像は、エフェクトへ入力された映像に限られます。</p>
+<p>全ての設定例で「大きさ・動き連動」を有効にし、「進行方向追従」「上下維持」「補正時左右反転」を無効にします。モーションブラーは「風に流れる雨」「風に流れる雪」「吹雪」で後方・強さ25%、それ以外で無効です。泡の初期角度と回転速度のばらつきは0%にします。出現開始は保持するため、立ち上がり途中では粒が少なく見える場合があります。</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="設定例の主な数値"><table><thead><tr><th scope="col">設定例</th><th scope="col">量</th><th scope="col">大きさ</th><th scope="col">移動速度</th></tr></thead><tbody>
+<tr><td>静かな細雪</td><td>12%</td><td>6 px</td><td>80 px/秒</td></tr>
+<tr><td>ひらひらしたぼたん雪</td><td>18%</td><td>40 px</td><td>100 px/秒</td></tr>
+<tr><td>風に流れる雪</td><td>28%</td><td>10 px</td><td>120 px/秒</td></tr>
+<tr><td>吹雪</td><td>65%</td><td>6 px</td><td>250 px/秒</td></tr>
+<tr><td>結晶が舞う雪</td><td>8%</td><td>60 px</td><td>60 px/秒</td></tr>
+<tr><td>渦を巻く雪</td><td>25%</td><td>12 px</td><td>40 px/秒</td></tr>
+<tr><td>下から吹き上がる雪</td><td>20%</td><td>30 px</td><td>落下60 px/秒（局所的な吹き上げを加算）</td></tr>
+<tr><td>風に流れる雨</td><td>30%</td><td>長さ70 px／太さ2 px</td><td>2500 px/秒</td></tr>
+<tr><td>輪郭の薄い水泡</td><td>4%</td><td>80 px</td><td>100 px/秒</td></tr>
+<tr><td>背景を映す水泡</td><td>3%</td><td>100 px</td><td>90 px/秒</td></tr>
+</tbody></table></div>
+</section>
+<section class="section" id="rain"><p class="section-kicker">05 / 種類ごとの調整</p><h2>雨の量と見た目</h2>
+<p>「種類」を「雨」にすると、線、丸、水滴を選べます。線は長さと太さ、丸と水滴は「大きさ」で寸法を調整します。</p>
+<p class="table-hint">表は横へスクロールできます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="雨の見た目と寸法"><table><thead><tr><th scope="col">見た目</th><th scope="col">寸法と表現</th></tr></thead><tbody><tr><td>線</td><td>長さと太さを指定します。両端へ薄いグラデーションを付けます。</td></tr>
+<tr><td>丸</td><td>大きさは直径です。塗りつぶした円を描きます。</td></tr>
+<tr><td>水滴</td><td>大きさは幅で、高さは幅の1.6倍です。輪郭と反射光を描きます。</td></tr></tbody></table></div>
+<p>「方向」は0°で下です。「風」を有効にすると、基本の移動へ風を加え、線も合成した移動方向へ傾きます。風を強くしても筋の長さは自動では変わりません。</p>
+<h3>大きい粒ほど基本移動を速くする</h3>
+<p>ばらつきの「大きさ・動き連動」を有効にします。「大きさばらつき」で粒の寸法差を作り、「速度ばらつき」で小粒と大粒の速度差を調整します。全種類で使用でき、線では太さ、それ以外では粒ごとの相対的な大きさに連動します。PNG倍率や全粒の基準サイズだけでは速度は変わりません。大きさばらつき・速度ばらつきのどちらかが0%なら連動による速度差はなく、基準速度0では基本移動を作りません。</p>
+<p>雨で風への反応にも差を付ける場合は、「風」を有効にし、風の「反応ばらつき」を0%より大きくします。小さい粒ほど風による追加速度が大きくなります。新規追加時の反応ばらつきは、線と丸が10%、水滴が100%です。</p>
+<p>新規追加時の連動は、雪用PNGのみ無効で、それ以外の見た目は有効です。雨では、大きさばらつき0%なら風への反応差もなくなります。反応ばらつき0%では風への反応差がなくなります。雪の風の反応差はこの連動の対象外です。</p>
+<p>まとめて試す場合は、設定例（プリセット）の「風に流れる雨」を適用します。この例では、大きさと動きの連動、横風、粒ごとの反応差を有効にします。</p>
+</section>
+<section class="section" id="snow"><p class="section-kicker">06 / 種類ごとの調整</p><h2>雪を降らせる</h2>
+<ol><li>「種類」を「雪」にします。</li><li>「見た目」で雪の形を選びます。</li><li>「量」「大きさ」「落下速度」「不透明度」を調整します。</li><li>必要に応じて「風」「漂い」や「動き」を調整します。</li></ol>
+<p class="table-hint">表は横へスクロールできます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="雪の見た目と固有設定"><table><thead><tr><th scope="col">見た目</th><th scope="col">用途と固有設定</th></tr></thead><tbody>
+<tr><td>玉雪</td><td>「大きさ」で寸法を、「輪郭柔らかさ」で明瞭な輪郭から柔らかい輪郭まで調整します。</td></tr>
+<tr><td>ぼたん雪</td><td>不揃いな塊を描きます。「輪郭柔らかさ」に対応します。</td></tr>
+<tr><td>雪の結晶</td><td>「結晶形状」で6本枝、樹枝状、細かな樹枝状、幅広い星形、扇形、六角板を選べます。「混在」では6種類を混ぜて降らせます。幅広い星形は段差のある輪郭、扇形は中心から広がる板状の形です。</td></tr>
+<tr><td>PNG</td><td>登録した画像を雪として動かします。画像選択はカスタムPNGと独立しています。</td></tr></tbody></table></div>
+<p>各形状で量や風などの設定を個別に保持し、戻すとその形状の設定が復元されます。柔らかさは0%で縁が明瞭になり、100%で広く薄くなります。この欄は玉雪とぼたん雪に表示します。「静かな細雪」「吹雪」の設定例は玉雪を6 px・柔らかさ0%にします。</p>
+<p>結晶を見せたいときは「大きさ」を大きめに調整します。小さくすると細かな枝は見えにくくなります。「混在」でも粒ごとの形は移動中に変わりません。</p>
+<p>初期設定では落下速度60 px/秒、漂い有効、回転速度20°/秒です。完全に止めたいときは、落下速度に加え、漂い、風、局所的な動き、回転も止めます。</p>
+</section>
+<section class="section" id="wind"><p class="section-kicker">07 / 種類ごとの調整</p><h2>風・漂い・局所的な動き</h2>
+<h3>雨と雪に共通の風</h3><p>「風」を有効にし、「風向」と「風強度」を調整します。風向90°で右、270°で左へ流れます。強さは画面上の追加速度で、落下速度とは別の値です。</p>
+<p>「風変動」は風の強弱、「変動速度」は変化する速さです。変動0%または速さ0倍では、基準の強さで吹きます。「反応ばらつき」を大きくすると、粒ごとに風を受ける強さが変わります。</p>
+<h3>雪の漂い</h3><p>「漂い」は、粒を横へゆっくり揺らす動きです。幅は基準軌道から片側への最大距離、速さは時間変化の倍率です。速さ0倍では漂いを止めます。</p>
+<p>「不規則さ」0%では規則的に往復し、大きくすると複数の滑らかな波を組み合わせた動きになります。出現開始を指定した場合は、出発直後の幅を0から徐々に増やします。</p>
+<h3>渦と巻き上がり</h3><p>雪の「動き」で方式を選びます。どちらも落下、風、漂いへ動きを加えます。</p>
+<p class="table-hint">表は横へスクロールできます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="雪の動きと調整項目"><table><thead><tr><th scope="col">動き</th><th scope="col">調整する項目</th></tr></thead><tbody><tr><td>基本降雪</td><td>落下、風、漂いを組み合わせます。静かな雪から吹雪まで、設定の強弱で調整します。</td></tr>
+<tr><td>渦</td><td>中心X・Y、影響半径、渦強度、時計回りを設定します。中心と範囲の端では回転の追加速度が0になります。</td></tr>
+<tr><td>巻き上がり</td><td>中心X・Y、範囲幅・高さ、吹き上げ強度を設定します。中央で上昇し、上側で左右へ広がり、側方で下降する流れを加えます。</td></tr></tbody></table></div>
+<p>「吹き上げ強度」は中央での上向きの追加速度です。落下速度より大きくすると、中央付近の粒が上昇します。粒ごとの速度差や風、漂いも重なるため、全ての粒が同じ高さまで上がるわけではありません。</p>
+<p>中心の原点は入力画像の中心です。Xは右が正、Yは下が正です。範囲を出たあとも、それまでに生じた位置の差は残ります。巻き上がりは空中の範囲を使う表現で、地面の検出や積雪は行いません。</p>
+</section>
+<section class="section" id="bubbles"><p class="section-kicker">08 / 種類ごとの調整</p><h2>泡を浮かべる</h2>
+<ol><li>「種類」を「泡」にします。</li><li>「見た目」で「水泡A」または「水泡B」を選びます。</li><li>「大きさ」「浮上速度」「不透明度」を調整します。</li><li>輪郭を薄くしたい場合は「輪郭濃度」を下げます。</li></ol>
+<p>方向の初期値は180°で上向きです。水泡Aは透明な中央、色付きの輪郭、白い反射光を描きます。「輪郭濃度」0%では輪郭を消し、反射光と内部の薄い色を残します。全体を薄くする場合は「不透明度」を使います。</p>
+<h3>水泡Bの映り込み</h3><p>水泡Bは周囲の入力映像を上下左右反転して0.6倍に縮小し、泡の内側へ合成します。「映り込み」はその強さです。輪郭の濃さとは独立して調整できます。球面の屈折を計算する表現ではありません。</p>
+<div class="callout"><p><strong>別アイテムを映す場合</strong> 背景画像より手前にエフェクトアイテムを重ね、そのエフェクト欄へ「雨雪と浮上」を追加します。「泡」から「水泡B」を選び、「映り込み」を上げてください。エフェクトアイテムのサイズで対象範囲を指定します。</p></div>
+</section>
+<section class="section" id="png"><p class="section-kicker">09 / 種類ごとの調整</p><h2>PNG画像を登録して動かす</h2>
+<p>カスタムPNGは最初から「ブタ（標準画像）」を表示します。標準画像はDLL内にあり、画像ライブラリの登録上限には含めません。標準画像は置換・削除できませんが、別のPNGを追加して切り替えられます。従来の保存データの画像選択や未指定状態は維持します。</p>
+<h3>画像を登録する</h3><ol><li>「種類」を「カスタムPNG」にするか、雪の「見た目」を「PNG」にします。</li><li>登録名を入力し、「PNGを追加」で画像を選びます。</li><li>登録済みの画像は一覧から選び、「使用」で選択中の種類へ適用します。</li><li>「倍率」、移動速度または落下速度を調整します。</li></ol>
+<p>登録時にPNGを専用ライブラリへコピーします。原本を移動してもコピーから表示できます。縦横比と透明部分を保ち、100%で元画像の縦横サイズ、200%で縦横2倍になります。「倍率」は1～1000%で調整でき、透明な余白も寸法に含みます。</p>
+<p>雪用とカスタム用の選択は別々です。共通ライブラリから同じ画像を選ぶこともできます。</p>
+<p class="table-hint">表は横へスクロールできます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="PNGライブラリの操作と影響"><table><thead><tr><th scope="col">操作</th><th scope="col">影響</th></tr></thead><tbody><tr><td>使用</td><td>選択中の種類の画像参照だけを変更します。</td></tr>
+<tr><td>PNGを追加</td><td>画像のコピーを新規登録します。登録上限は100件、同名の重複登録はできません。</td></tr>
+<tr><td>置換</td><td>同じ画像IDを使う全アイテムと、両方のPNG入口へ反映します。</td></tr>
+<tr><td>削除</td><td>登録とコピーを削除します。参照している粒は表示できなくなります。原本は変更しません。</td></tr></tbody></table></div>
+<p>追加・置換・削除などのライブラリ操作はYMM4のUndo対象外です。置換・削除時は画面に表示される影響を確認してください。</p>
+<p>対応画像は縦横各2048 px以下、16 MB以下のPNGです。複数フレームの画像は先頭フレームを使います。未選択、欠落、破損、管理情報と内容の不一致では入力映像だけを表示し、「画像解像度」で知らせます。</p>
+</section>
+<section class="section" id="motion"><p class="section-kicker">10 / 詳しい調整と保存</p><h2>移動方向と速度</h2>
+<p>雨、泡、カスタムPNGは「方向」で進む向きを選びます。雪の基本方向は下向きで、風や局所的な動きで変化を加えます。</p>
+<p class="table-hint">表は横へスクロールできます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="方向と移動先"><table><thead><tr><th scope="col">方向</th><th scope="col">移動先</th></tr></thead><tbody><tr><td>0°</td><td>下</td></tr>
+<tr><td>90°</td><td>右</td></tr>
+<tr><td>180°</td><td>上</td></tr>
+<tr><td>270°</td><td>左</td></tr></tbody></table></div>
+<p>方向と回転角度は数値入力で360°を超える値も指定できます。例えば方向を0°から720°へAnimationで変えると、移動方向が2回転します。</p>
+<p>「大きさ・動き連動」が無効のとき、速度のばらつき0%では均一、40%では基準速度の0.6～1.4倍、100%ではほぼ0～2倍になります。大きさのばらつきは速度と独立して決まります。連動を有効にすると、基本速度の差を相対的な粒の大きさに合わせます。雨だけは風への反応も連動します。雪の風・漂い・渦・巻き上がりや泡・PNGの揺らめきの計算は維持するため、合成後の速さが粒の大小順になるとは限りません。方向追従が有効な場合、合成方向の変化は画像の向きにも反映します。</p>
+<p>基準速度0でも、風や漂いなどを有効にしていれば粒は動きます。画面外へ出た粒は外側で循環します。途中でばらつきを0へ戻しても、それまでに開いた位置の差は残ります。</p>
+</section>
+<section class="section" id="rotation"><p class="section-kicker">11 / 詳しい調整と保存</p><h2>揺らめきと回転</h2>
+<h3>泡とカスタムPNGの揺らめき</h3><p>「揺らめき」を有効にすると、進行方向と直角に往復します。揺れ幅は片側の最大距離、揺れ周期は一往復の秒数です。雪では「漂い」を使います。</p>
+<p>揺らめきだけでは画像の向きを変えません。速度0でも動くので、止めるには無効にするか幅を0にします。出現開始を指定した場合は、最初の一周期で幅を滑らかに増やします。</p>
+<h3>移動方向にぼかす</h3>
+<p>「モーションブラー」のグループで「モーションブラー」を有効にし、「方式」と「強さ」を調整します。「前後」は両側へぼかし、「後方」は先頭の像を残して後ろへ薄い尾を伸ばします。新規追加時の方式は、雪の結晶と雪用PNGが「前後」、それ以外は「後方」です。保存した設定は、見た目ごとに保持されます。速い粒ほど移動方向へ長くぼけます。風、雪の漂い・渦・巻き上がり、泡やPNGの揺らめきにも追従します。「方向追従」を有効にする必要はありません。</p>
+<p>新規追加時の有効状態・方式・強さは見た目別です。設定は見た目ごとに保持し、強さにはAnimationを設定できます。無効または強さ0%では通常の描画になります。背景にはかからず、水泡Bは輪郭と映り込みをまとめてぼかします。</p>
+<p>対象は粒の中心の移動です。回転だけの動き、アイテム自体の移動、曲線全体の残像はぼかしません。速さを上げてもぼけ幅には上限があります。粒数が多いと再生負荷が増えるため、必要な見た目で有効にしてください。</p>
+<h3>回転と向き</h3><p>「回転」のグループで調整します。「回転角度」は基準角度、「回転速度」は1秒あたりの回転です。正で時計回り、負で反時計回りです。線には適用しません。</p>
+<p>「初期角度ばらつき」は粒ごとの向き、「回転速度ばらつき」は回転の速さの差を調整します。基準の回転速度0では、回転速度のばらつきを付けても自転しません。</p>
+<p>「進行方向追従」は移動方向へ向きを合わせます。雪の漂いによる瞬間的な方向も含みます。「上下維持」は角度が±90°を超える区間で180°補正し、「補正時左右反転」はその区間だけ左右を反転します。切替点では向きが瞬時に反転するため、絵柄と動きに合わせて選んでください。</p>
+</section>
+<section class="section" id="onset"><p class="section-kicker">12 / 詳しい調整と保存</p><h2>出現開始</h2>
+<p>「出現開始」のグループで「出現開始指定」を有効にします。「開始時間」で流れ始める時刻、「立ち上がり時間」で粒の発生ペースが設定量へ達するまでの時間を指定します。</p>
+<p class="table-hint">表は横へスクロールできます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="出現開始時の増え方と発生ペース"><table><thead><tr><th scope="col">増え方</th><th scope="col">発生ペース</th></tr></thead><tbody><tr><td>均等</td><td>設定量のペースへ均等に近づけます。</td></tr>
+<tr><td>ポツポツから</td><td>最初は少なく、後半ほど増やします。</td></tr></tbody></table></div>
+<p>粒は画面外から流れ込み、立ち上がり後もそのまま降り続けます。下向きなら上側、上向きなら下側から入ります。立ち上がり時間がある場合は、最初の1粒を開始時刻から画面端のすぐ外で動かし、残りを指定のペースで増やします。見え始めるまでの時間は粒の大きさ、PNGの透明な余白、回転、移動速度によって変わります。雨や雪が開始時から斜めに流れる場合は、先行する1粒を除き、その進行方向に沿って一つの面から広がります。降り続けている間は横側からも流れ込みます。開始時に画面内の粒を突然表示することはありません。風や漂いなどを加えた場合の到達位置と時間は、動きの設定によって変わります。</p>
+<p>立ち上がり時間0秒では、最初から通常の発生ペースで流し始めます。画面全体に行き渡るまでの時間は、画面の寸法と移動速度にも左右されます。全ての移動を止めていると画面内には現れません。繰り返しの増減やフェードには「量」と「不透明度」のAnimationを使います。</p>
+</section>
+<section class="section" id="animation"><p class="section-kicker">13 / 詳しい調整と保存</p><h2>Animationと色</h2>
+<p>Animationに対応する項目では、YMM4の各項目のAnimation設定を使って先頭、途中、終点の値を調整できます。例えば「量」を増やしながら「風強度」を上げると、途中から天候を強くできます。</p>
+<p>種類、見た目、動きの方式、有効／無効の切替は固定設定です。Animationの対象は<a href="#defaults">設定表</a>を参照してください。</p>
+<h3>色を変える</h3><p>「開始色」のパレットはRGBの先頭値を編集します。パレットを操作しても途中点や終点は保持します。パレットの表示は再生位置によらず先頭の色です。途中から色を変える場合は「赤強度」「緑強度」「青強度」のAnimationを編集します。</p>
+<p>PNGでは元のRGBへ設定色を掛け合わせます。元の色を保つには白、RGB各100%にします。画像を透けずに表示するには、不透明度100%、不透明度のばらつき0%、パレットのアルファ255にします。PNG自体の透明度は残ります。</p>
+</section>
+<section class="section" id="save"><p class="section-kicker">14 / 詳しい調整と保存</p><h2>保存とバックアップ</h2><p>非選択の見た目の設定も保存します。同じ種類でも、ある見た目で変更した風や色は、別の見た目には反映しません。設定例が見た目を切り替える場合は、切替先の設定へ一覧の項目だけを適用します。</p>
+<p>プロジェクトには、選択中の種類と4種類分の設定を保存します。表示していない種類のAnimationと、雪用・カスタム用のPNG参照も保存します。</p>
+<p>PNG本体はプロジェクトに埋め込みません。ライブラリはYMM4設定フォルダーの <code>YMM4Rainfall/images/</code> にあり、コピー画像と <code>images.json</code> を保存しています。</p>
+<ol><li>YMM4を終了します。</li><li>プロジェクトとライブラリフォルダー全体をバックアップします。</li><li>別のPCで使う場合は、プロジェクトに加え、対応する設定フォルダーへライブラリ全体をコピーします。</li></ol>
+<p>コピー先にライブラリがある場合は、既存の登録内容を保護して扱ってください。PNGをライブラリ内で直接上書きせず、画面の「置換」で更新します。</p>
+</section>
+<section class="section" id="trouble"><p class="section-kicker">15 / 困ったときと資料</p><h2>困ったとき</h2>
+<p class="table-hint">表は横へスクロールできます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="困ったときの確認表"><table><thead><tr><th scope="col">症状</th><th scope="col">確認すること</th></tr></thead><tbody><tr><td>雪の風や回転が見つからない</td><td>「種類」が雪か確認します。折りたたまれているグループは見出し左の矢印で開きます。</td></tr>
+<tr><td>粒が見えない</td><td>量、不透明度、色のアルファ、出現開始時間を確認します。PNGは「画像解像度」も確認します。</td></tr>
+<tr><td>種類を戻すと前に調整した値になる</td><td>種類ごとの設定保持による動作です。必要な種類を選んで調整します。</td></tr>
+<tr><td>量を増やしても変化しない</td><td>画面外を含めた粒数が上限の4000粒に達すると、それ以上は増えません。「量」は画面内の粒数を直接指定する値ではありません。</td></tr>
+<tr><td>モーションブラーが見えない</td><td>選択中の見た目でモーションブラーが有効か、強さが0%でないかを確認します。粒の中心が移動していない場合や動きが遅い場合は、ぼけが現れないか小さくなります。</td></tr>
+<tr><td>丸の回転が見えない</td><td>丸は円形なので、回転や左右反転による見た目の変化がありません。向きの調整は水滴などで確認できます。</td></tr>
+<tr><td>泡の輪郭を消しても白い光が残る</td><td>輪郭濃度は反射光へ作用しません。全体を薄くする場合は不透明度を下げます。</td></tr>
+<tr><td>速度0でも動く</td><td>風、漂い、渦、巻き上がり、揺らめき、回転の設定を確認します。</td></tr>
+<tr><td>PNGが意図より小さい</td><td>100%は透明な余白を含む元画像サイズです。「倍率」と画像の余白を確認します。</td></tr>
+<tr><td>PNGが別のアイテムでも変わった</td><td>同じ画像IDの置換は全参照先へ反映します。独立した画像にしたい場合は別名で追加します。</td></tr>
+<tr><td>背景が泡へ映らない</td><td>水泡Bを選び、映り込みを上げます。参照対象は入力映像です。別アイテムを映す場合は、背景より手前のエフェクトアイテムに「雨雪と浮上」を追加し、対象範囲のサイズを確認してください。</td></tr>
+<tr><td>シークやプレビューが重い</td><td>量、粒の大きさ、同時エフェクト数を下げて確認します。渦や巻き上がりの長尺シークは計算が増えます。</td></tr>
+<tr><td>設定状態に未対応と表示される</td><td>保存形式や種類・形状を認識できません。入力映像を表示しています。使用中のDLLとプロジェクトの組合せを確認してください。玉雪への統合前の保存データは移行しません。旧形状名を含む場合は、エフェクトの未対応表示ではなくプロジェクト自体の読込が失敗します。旧プロジェクトを保持し、新版の確認ではエフェクトを新規追加してください。</td></tr></tbody></table></div>
+</section>
+<section class="section" id="quality"><p class="section-kicker">16 / 困ったときと資料</p><h2>動作確認範囲と制限</h2>
+<p>YMM4 Lite 4.56.1.0で、既存プロジェクトの読み込み、雨・雪・PNGの表示と短時間再生を確認しています。保存と再読み込み、Undo/Redo、短い動画出力は代表的な条件で確認しています。水泡Bによる別アイテムの映り込みも、基本表示、位置とサイズの変更、動く背景でのシーク、短い動画出力を確認しています。</p>
+<p>他のYMM4バージョン、実再生FPS、最大粒数付近での性能、長時間連続再生の安定性は確認していません。粒数や画面サイズ、同時に使うエフェクトが増えると処理が重くなる場合があります。</p>
+<ul><li>画面外を含め、1エフェクトで最大4000粒です。量は画面内の粒数を直接指定する値ではありません。</li><li>大きな粒や回転のため、画面外に配置の余白を取ります。</li><li>映り込み用画像の長辺は最大4096 pxです。入力が大きい場合は映り込み用画像を縮小します。</li><li>積雪、地面との衝突、溶解、雨音SEや音声との自動連動は行いません。</li></ul>
+</section>
+<section class="section" id="defaults"><p class="section-kicker">17 / 困ったときと資料</p><h2>設定範囲と初期値</h2>
+<p>新しいエフェクトでの初期値です。種類を切り替えても初期値へ戻らず、調整した設定を保持します。条件に合う項目だけを表示します。</p>
+<h3>見た目別の初期値</h3><p>YMM4側でこのエフェクトのデフォルトを変更していない場合の、新規追加時の初期値です。雨・泡・カスタムPNGは出現開始と量の増加が有効です。線は20秒、他は10秒をかけて増えるため、追加直後は粒が少なく見えます。カスタムPNGの初期画像はブタ（標準画像）、回転速度は−100°/秒です。雪の初期選択はぼたん雪です。雪用PNGは画像を別途選択してください。</p><div class="table-wrap" tabindex="0" role="region" aria-label="見た目別の初期値"><table><thead><tr><th scope="col">種類</th><th scope="col">見た目</th><th scope="col">量</th><th scope="col">速度</th><th scope="col">大きさ</th><th scope="col">不透明度</th><th scope="col">方向</th></tr></thead><tbody><tr><td>雨</td><td>線</td><td>30%</td><td>4000 px/秒</td><td>長さ100・太さ3 px</td><td>50%</td><td>0°</td></tr>
+<tr><td>雨</td><td>丸</td><td>100%</td><td>1080 px/秒</td><td>3 px</td><td>70%</td><td>-10°</td></tr>
+<tr><td>雨</td><td>水滴</td><td>12%</td><td>480 px/秒</td><td>24 px</td><td>80%</td><td>10°</td></tr>
+<tr><td>雪</td><td>玉雪</td><td>30%</td><td>100 px/秒</td><td>10 px</td><td>100%</td><td>0°</td></tr>
+<tr><td>雪</td><td>ぼたん雪</td><td>25%</td><td>150 px/秒</td><td>50 px</td><td>100%</td><td>0°</td></tr>
+<tr><td>雪</td><td>雪の結晶</td><td>20%</td><td>60 px/秒</td><td>50 px</td><td>80%</td><td>0°</td></tr>
+<tr><td>雪</td><td>PNG</td><td>20%</td><td>60 px/秒</td><td>倍率100%</td><td>80%</td><td>0°</td></tr>
+<tr><td>泡</td><td>水泡A</td><td>5%</td><td>100 px/秒</td><td>100 px</td><td>74%</td><td>180°</td></tr>
+<tr><td>泡</td><td>水泡B</td><td>5%</td><td>100 px/秒</td><td>100 px</td><td>75%</td><td>180°</td></tr>
+<tr><td>PNG</td><td>PNG</td><td>5%</td><td>250 px/秒</td><td>倍率100%</td><td>100%</td><td>0°</td></tr></tbody></table></div>
+<h3>範囲と表示条件</h3><p class="table-hint">表は横へスクロールできます。</p><div class="table-wrap" tabindex="0" role="region" aria-label="設定範囲と表示条件"><table><thead><tr><th scope="col">項目</th><th scope="col">初期値</th><th scope="col">範囲と表示条件</th><th scope="col">Animation</th></tr></thead><tbody><tr><td>量</td><td>見た目別</td><td>0～100%</td><td>あり</td></tr>
+<tr><td>移動速度／落下速度／浮上速度</td><td>見た目別</td><td>0～4000 px/秒</td><td>あり</td></tr>
+<tr><td>方向</td><td>見た目別</td><td>全方向、数値入力で複数回転。雪は下向き固定</td><td>あり</td></tr>
+<tr><td>大きさ</td><td>見た目別</td><td>1～512 px、線・PNG以外</td><td>あり</td></tr>
+<tr><td>倍率</td><td>100%</td><td>1～1000%、雪用PNG・カスタムPNG</td><td>あり</td></tr>
+<tr><td>長さ</td><td>100 px</td><td>1～200 px、線</td><td>あり</td></tr>
+<tr><td>太さ</td><td>3 px</td><td>0.1～8 px、線</td><td>あり</td></tr>
+<tr><td>不透明度</td><td>見た目別</td><td>0～100%</td><td>あり</td></tr>
+<tr><td>輪郭濃度</td><td>50%</td><td>0～100%、泡2形状</td><td>あり</td></tr>
+<tr><td>映り込み</td><td>50%</td><td>0～100%、水泡B</td><td>あり</td></tr>
+<tr><td>輪郭柔らかさ</td><td>雪・玉雪：50%／雪・ぼたん雪：75%</td><td>0～100%、玉雪・ぼたん雪</td><td>なし</td></tr>
+<tr><td>結晶形状</td><td>樹枝状</td><td>混在／6本枝／樹枝状／細かな樹枝状／幅広い星形／扇形／六角板、雪の結晶</td><td>なし</td></tr>
+<tr><td>風</td><td>雨・線・雨・丸・雨・水滴：有効／雪・玉雪・雪・ぼたん雪・雪・雪の結晶・雪・PNG・泡・水泡A・泡・水泡B・PNG・PNG：無効</td><td>雨と雪</td><td>なし</td></tr>
+<tr><td>風向</td><td>90°</td><td>全方向、数値入力で複数回転</td><td>あり</td></tr>
+<tr><td>風強度</td><td>雨・線：200 px/秒／雨・丸・雨・水滴・雪・ぼたん雪・雪・雪の結晶・雪・PNG・泡・水泡A・泡・水泡B・PNG・PNG：100 px/秒／雪・玉雪：50 px/秒</td><td>0～2000 px/秒</td><td>あり</td></tr>
+<tr><td>風変動</td><td>雨・線：20%／雨・丸・雪・玉雪・雪・ぼたん雪・雪・雪の結晶・雪・PNG・泡・水泡A・泡・水泡B・PNG・PNG：25%／雨・水滴：100%</td><td>0～100%</td><td>あり</td></tr>
+<tr><td>変動速度</td><td>1倍</td><td>0～10倍、風が有効な場合</td><td>なし</td></tr>
+<tr><td>反応ばらつき</td><td>雨・線・雨・丸：10%／雨・水滴：100%／雪・玉雪・雪・ぼたん雪・雪・雪の結晶・雪・PNG：30%／泡・水泡A・泡・水泡B・PNG・PNG：0%</td><td>0～100%、風が有効な場合</td><td>なし</td></tr>
+<tr><td>漂い</td><td>雪で有効</td><td>雪のみ</td><td>なし</td></tr>
+<tr><td>漂い幅</td><td>雨・線・雨・丸・雨・水滴・雪・PNG・泡・水泡A・泡・水泡B・PNG・PNG：15 px／雪・玉雪・雪・ぼたん雪：50 px／雪・雪の結晶：25 px</td><td>0～200 px</td><td>あり</td></tr>
+<tr><td>漂い速度</td><td>1倍</td><td>0～10倍</td><td>なし</td></tr>
+<tr><td>不規則さ</td><td>雨・線・雨・丸・雨・水滴・雪・ぼたん雪・雪・雪の結晶・雪・PNG・泡・水泡A・泡・水泡B・PNG・PNG：60%／雪・玉雪：75%</td><td>0～100%、漂いが有効な場合</td><td>なし</td></tr>
+<tr><td>動き</td><td>基本降雪</td><td>基本降雪／渦／巻き上がり、雪のみ</td><td>なし</td></tr>
+<tr><td>中心X／中心Y</td><td>各0 px</td><td>各−32768～32768 px、渦・巻き上がり</td><td>あり</td></tr>
+<tr><td>影響半径</td><td>400 px</td><td>1～8192 px、渦</td><td>あり</td></tr>
+<tr><td>渦強度</td><td>150 px/秒</td><td>0～2000 px/秒</td><td>あり</td></tr>
+<tr><td>時計回り</td><td>有効</td><td>渦</td><td>なし</td></tr>
+<tr><td>範囲幅／範囲高さ</td><td>800／400 px</td><td>各1～8192 px、巻き上がり</td><td>あり</td></tr>
+<tr><td>吹き上げ強度</td><td>200 px/秒</td><td>0～2000 px/秒</td><td>あり</td></tr>
+<tr><td>揺らめき</td><td>雨・線・雨・丸・雨・水滴・雪・玉雪・雪・ぼたん雪・雪・雪の結晶・雪・PNG・PNG・PNG：無効／泡・水泡A・泡・水泡B：有効</td><td>泡・カスタムPNG</td><td>なし</td></tr>
+<tr><td>揺れ幅</td><td>雨・線・雨・丸・雨・水滴・雪・玉雪・雪・ぼたん雪・雪・雪の結晶・雪・PNG・PNG・PNG：20 px／泡・水泡A・泡・水泡B：50 px</td><td>0～200 px</td><td>なし</td></tr>
+<tr><td>揺れ周期</td><td>雨・線・雨・丸・雨・水滴・雪・玉雪・雪・ぼたん雪・雪・雪の結晶・雪・PNG・PNG・PNG：2秒／泡・水泡A・泡・水泡B：3秒</td><td>0.1～60秒</td><td>なし</td></tr>
+<tr><td>速度ばらつき</td><td>雨・線：100%／雨・丸・雪・玉雪・雪・雪の結晶・PNG・PNG：50%／雨・水滴：40%／雪・ぼたん雪・泡・水泡A・泡・水泡B：25%／雪・PNG：35%</td><td>0～100%</td><td>あり</td></tr>
+<tr><td>大きさばらつき</td><td>雨・線・雪・雪の結晶・泡・水泡A・泡・水泡B・PNG・PNG：50%／雨・丸：0%／雨・水滴・雪・ぼたん雪・雪・PNG：40%／雪・玉雪：100%</td><td>0～100%</td><td>あり</td></tr>
+<tr><td>不透明度ばらつき</td><td>雨・線・雨・丸：50%／雨・水滴・雪・玉雪・PNG・PNG：0%／雪・ぼたん雪・雪・PNG：20%／雪・雪の結晶・泡・水泡A・泡・水泡B：25%</td><td>0～100%</td><td>あり</td></tr>
+<tr><td>大きさ・動き連動</td><td>雪のPNGのみ無効、それ以外は有効</td><td>全種類。大粒ほど基本移動を速くする。雨のみ小粒ほど風に流されやすくする</td><td>なし</td></tr>
+<tr><td>モーションブラー</td><td>雨・線・雨・丸・雪・玉雪・雪・ぼたん雪・泡・水泡A：有効／雨・水滴・雪・雪の結晶・雪・PNG・泡・水泡B・PNG・PNG：無効</td><td>全種類・見た目別</td><td>なし</td></tr>
+<tr><td>方式（モーションブラー）</td><td>雨・線・雨・丸・雨・水滴・雪・玉雪・雪・ぼたん雪・泡・水泡A・泡・水泡B・PNG・PNG：後方／雪・雪の結晶・雪・PNG：前後</td><td>前後／後方、見た目別</td><td>なし</td></tr>
+<tr><td>強さ（モーションブラー）</td><td>雨・線・泡・水泡A・泡・水泡B：100%／雨・丸：5%／雨・水滴：10%／雪・玉雪：25%／雪・ぼたん雪・雪・雪の結晶・雪・PNG・PNG・PNG：50%</td><td>0～100%、モーションブラー有効時</td><td>あり</td></tr>
+<tr><td>回転角度</td><td>カスタムPNG：−360°／それ以外：0°</td><td>複数回転可、線以外</td><td>あり</td></tr>
+<tr><td>回転速度</td><td>雨：0°/秒／玉雪・雪用PNG：20°/秒／ぼたん雪・雪の結晶：100°/秒／泡：50°/秒／カスタムPNG：−100°/秒</td><td>−36000～36000°/秒</td><td>なし</td></tr>
+<tr><td>初期角度ばらつき</td><td>雨・線・雨・丸・雨・水滴：0%／雪・玉雪・雪・ぼたん雪・雪・雪の結晶・雪・PNG：100%／泡・水泡A・泡・水泡B・PNG・PNG：50%</td><td>0～100%</td><td>なし</td></tr>
+<tr><td>回転速度ばらつき</td><td>雨・線・雨・丸・雨・水滴：0%／雪・玉雪・雪・ぼたん雪・雪・雪の結晶・雪・PNG・PNG・PNG：50%／泡・水泡A・泡・水泡B：25%</td><td>0～100%</td><td>なし</td></tr>
+<tr><td>進行方向追従／上下維持</td><td>追従は水滴・ぼたん雪・泡で有効、上下維持は無効</td><td>線以外</td><td>なし</td></tr>
+<tr><td>補正時左右反転</td><td>雨・線・雨・丸・雨・水滴・雪・玉雪・雪・ぼたん雪・雪・雪の結晶・雪・PNG・泡・水泡A・泡・水泡B：無効／PNG・PNG：有効</td><td>上下維持が有効な場合</td><td>なし</td></tr>
+<tr><td>開始色</td><td>見た目別（テンプレートのRGB先頭値）</td><td>RGB先頭値と連動</td><td>先頭値を編集</td></tr>
+<tr><td>赤強度／緑強度／青強度</td><td>見た目別。調整した値を保持します</td><td>各0～100%</td><td>あり</td></tr>
+<tr><td>出現開始指定</td><td>雨・線・雨・丸・雨・水滴・雪・ぼたん雪・泡・水泡A・泡・水泡B・PNG・PNG：有効／雪・玉雪・雪・雪の結晶・雪・PNG：無効</td><td>常時表示</td><td>なし</td></tr>
+<tr><td>開始時間</td><td>0秒</td><td>0～36000秒</td><td>なし</td></tr>
+<tr><td>増え方</td><td>雨・泡・カスタムPNGはポツポツから、雪は均等</td><td>均等／ポツポツから</td><td>なし</td></tr>
+<tr><td>立ち上がり時間</td><td>雨・線：20秒／雨・丸・雨・水滴・雪・ぼたん雪・泡・水泡A・泡・水泡B・PNG・PNG：10秒／雪・玉雪・雪・雪の結晶・雪・PNG：5秒</td><td>0～36000秒</td><td>なし</td></tr>
+<tr><td>乱数シード</td><td>0</td><td>0～99999の整数</td><td>なし</td></tr>
+</tbody></table></div>
+<p>PNGの登録と状態表示は、雪でPNGを選んだ場合とカスタムPNGで表示します。角度のスライダーは−360～360°、数値入力では複数回転を指定できます。</p>
+</section>
+<section class="section" id="license"><p class="section-kicker">18 / 困ったときと資料</p><h2>ライセンスとソースコード</h2>
+<p>対象バージョンは1.0.0です。ライセンスはMPL-2.0です。第三者ライブラリの情報は同梱のTHIRD_PARTY_NOTICES.md、対応ソースの入手先は同梱のSOURCE_CODE.txtを参照してください。</p>
+<p>内蔵の雨、雪、泡はコードで描く形状です。利用者が登録するPNGは、用途に応じた利用条件を確認して用意してください。</p>
+</section>
+</main></div><footer><p>雨雪と浮上 / YMM4Rainfall ユーザーズマニュアル</p></footer><script>
+    (() => {
+      const root = document.documentElement;
+      const themeButton = document.getElementById("themeButton");
+      const printButton = document.getElementById("printButton");
+      const tocButton = document.getElementById("tocButton");
+      const toc = document.getElementById("toc");
+
+
+      root.dataset.theme = "light";
+
+      const currentTheme = () => root.dataset.theme || "light";
+
+      const updateThemeButton = () => {
+        const isDark = currentTheme() === "dark";
+        themeButton.setAttribute("aria-pressed", String(isDark));
+        themeButton.title = isDark ? "明るい配色へ切り替えます" : "暗い配色へ切り替えます";
+      };
+
+      themeButton.addEventListener("click", () => {
+        root.dataset.theme = currentTheme() === "dark" ? "light" : "dark";
+        updateThemeButton();
+      });
+
+      printButton.addEventListener("click", () => window.print());
+
+      tocButton.addEventListener("click", () => {
+        const isOpen = toc.classList.toggle("is-open");
+        tocButton.setAttribute("aria-expanded", String(isOpen));
+        tocButton.textContent = isOpen ? "目次を閉じる" : "目次を表示";
+      });
+
+      toc.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          toc.classList.remove("is-open");
+          tocButton.setAttribute("aria-expanded", "false");
+          tocButton.textContent = "目次を表示";
+        });
+      });
+
+      const sectionLinks = new Map(
+        [...toc.querySelectorAll("a[href^='#']")].map((link) => [link.getAttribute("href").slice(1), link])
+      );
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+          if (!visible) {
+            return;
+          }
+
+          sectionLinks.forEach((link, id) => {
+            if (id === visible.target.id) {
+              link.setAttribute("aria-current", "true");
+            } else {
+              link.removeAttribute("aria-current");
+            }
+          });
+        }, {
+          rootMargin: "-10% 0px -72% 0px",
+          threshold: [0.05, 0.2, 0.5]
+        });
+
+        document.querySelectorAll("main > section[id]").forEach((section) => observer.observe(section));
+      }
+
+      updateThemeButton();
+    })();
+  </script></body></html>
